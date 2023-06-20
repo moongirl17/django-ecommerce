@@ -1,0 +1,94 @@
+{% extends 'core/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Welcome{% endblock %}
+{% block content %}
+
+
+
+
+    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+        <h2 class="mb-12 text-3xl font-bold text-center">
+            <span class="text-black text-uppercase ">Newest</span> <span class="text-red-500 text-uppercase">Items</span>
+        </h2>
+        <div class="grid grid-cols-4 gap-6">
+            {% for item in items %}
+                <div>
+                    <a href="{% url 'item:detail' item.id %}">
+                        <div>
+                            <img src="{{ item.image.url }}" class="rounded-t-xl">
+                        </div>
+
+                        <div class="p-6 bg-white rounded-b-xl ">
+                            <h1 class="text-xl font-semibold">{{ item.created_by }}</h1>
+                            <h2 class="text-base font-medium text-black">{{ item.name }}</h2>
+                            <!-- <p class="text-gray-500">Price: {{ item.price }}</p> -->
+                            
+                            <!-- {% if item.discount_price %}
+                                <p class="text-gray-500"><strong>Price:</strong><del> Rp.{{ item.price }}</del></p> 
+                                <p class="mt-1 py-0.5 px-2 inline-block bg-white border-2 border-red-500 text-base rounded-xl text-red-500"><strong>Discount Price:</strong> Rp.{{ item.discount_price }} </p> 
+                            {% else %}
+                                <p class="price">Rp.{{ item.price }}</p>
+                            {% endif %}
+
+                            {% if item.discount_percentage %}
+                                <p class="text-gray-500 ml-2 float-right">Discount: {{ item.discount_percentage }}%</p>
+                            {% endif %} -->
+                            <div class="ratting">
+                                <i class='bx bxs-star text-yellow-400'></i>
+                                <i class='bx bxs-star text-yellow-400'></i>
+                                <i class='bx bxs-star text-yellow-400'></i>
+                                <i class='bx bxs-star text-yellow-400'></i>
+                                <i class='bx bx-star text-yellow-400'></i>
+                            </div>
+                            {% if item.discount_price %}
+                            <div class="flex items-center">
+                                <div>
+                                    <p class="text-gray-500 flex items-center">
+                                        <strong><del>Rp.{{ item.price }}</del></strong>
+                                        <span class="text-gray-500 ml-1 font-medium">-{{ item.discount_percentage }}%</span>
+                                        <span class="ml-3  mt-1 py-0.5 px-2 inline-block bg-white border-2 border-red-500 text-sm rounded-xl text-red-500 ">
+                                            <span class="bx bxs-discount text-1xl"> <strong> Rp.{{ item.discount_price }}</strong>
+                                           </span>
+                                        
+                                        </span>
+          
+                                    </p>
+                                                                      
+                                </div>
+                            </div>
+                            {% else %}
+                                <div class="flex items-center">
+                                    <p class="text-gray-500"><strong>Rp.{{ item.price }}</p></strong>
+                                    <!-- <p class="price">Rp.{{ item.price }}</p> -->
+                                    <!-- <p class="text-gray-500 ml-4">No Discount</p> -->
+                                </div>
+                            {% endif %}
+                           
+                        </div>
+                        
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    
+     <!-- <div class="mt-6 px-6 py-12 bg-white-100 rounded-xl"> 
+        <h2 class="mb-12 text-2xl text-center">Categories</h2>
+
+        <div class="mt-6 px-6 py-12 bg-white-100 rounded-xl"> 
+        <h2 class="mb-12 text-2xl text-center">Categories</h2>
+            {% for category in categories %}
+                <div>
+                    <a href="#">
+                        <div class="p-6 bg-white rounded-b-xl">
+                            <h2 class="text-2xl">{{ category.name }}</h2>
+                            <p class="text-gray-500">{{ category.items.count }} items</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>  -->
+{% endblock %}

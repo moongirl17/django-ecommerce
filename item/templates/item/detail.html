@@ -1,0 +1,164 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ item.name }}{% endblock %}
+{% load django_bootstrap5 %}
+{% block content %}
+
+
+
+<div class="grid grid-cols-5 gap-6">
+    <div class="col-span-3 p-6 bg-white rounded-xl">
+        <img src="{{ item.image.url }}" class="mx-auto d-block rounded-xl">
+    </div>
+        <div class="col-span-2 p-6 bg-white rounded-xl">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="mb-0.0 text-gray-500 text-2xl font-semibold">{{ item.created_by.username }}</p>
+                </div>
+                {% if item.discount_price %}
+                    <p class="mt-1 py-0.5 px-2 inline-block bg-white border-2 border-red-500 text-base rounded-xl text-red-500">
+                        <strong>Discount</strong>
+                    </p>
+                {% endif %}
+            </div>
+            <h1 class="mb-4 text-2xl">{{ item.name }}</h1>
+            <div class="ratting">
+                <i class='bx bxs-star text-yellow-400'></i>
+                <i class='bx bxs-star text-yellow-400'></i>
+                <i class='bx bxs-star text-yellow-400'></i>
+                <i class='bx bxs-star text-yellow-400'></i>
+                <i class='bx bx-star text-yellow-400'></i>
+            </div>
+            {% if item.discount_price %}
+                <p class="text-gray-500">
+                    <strong>Price:</strong>
+                    <del>Rp.{{ item.price }}</del>
+                    <span class="text-gray-500 ml-0.1 font-medium">-{{ item.discount_percentage }}%</span> 
+                </p> 
+                <p class="mb-4 text-red-500">
+                    <strong>Discount Price:</strong>
+                    Rp.{{ item.discount_price }}
+                </p>
+                
+            {% else %}
+                <p class="mb-2 text-gray-500">
+                    <strong>Price: </strong>
+                    Rp.{{ item.price }}
+                </p>
+            {% endif %}
+        
+            {% if item.description %}
+                <p class="mb-6 text-gray-700">
+                    <strong class="text-gray-500 gap-3">Description:</strong><br>
+                    {{ item.description }}
+                </p>
+            {% endif %}
+
+            <a href="#" class="inline-block mt-5 px-6 py-3 text-lg text-center font-semibold bg-gray-800 text-white rounded-xl hover:bg-gray-700 mr-3">
+                <span class="flex items-center">
+                    <span class="mr-2">Add to Cart</span>
+                    <span class="bx bx-cart text-2xl"></span>
+                </span>
+            </a>
+            <a href="#" class="inline-block mt-5 px-12 py-3.5 text-lg text-center font-semibold bg-gray-800 text-white rounded-xl hover:bg-gray-700">
+                <span class="flex items-center">
+                    <span class="mr-2">Buy Now</span>
+                </span>
+            </a>
+            {% if item.is_new %}
+                <span class="badge bg-success">Baru</span>
+            {% endif %}
+        
+            {% if item.is_best_seller %}
+                <span class="badge bg-primary">Best Seller</span>
+            {% endif %}
+        </div>
+    <!-- <div class="col-span-2 p-6 bg-gray-100 rounded-xl"> 
+        <h1 class="mb-6 text-3xl">{{ item.name }}</h1> -->
+        <!-- <p class="text-gray-500"><strong>Price: </strong>{{ item.price }}</p> -->
+        <!-- {% if item.discount_price %}
+            <p class="text-gray-500"><strong>Price:</strong><del> Rp.{{ item.price }}</del></p> 
+            <p class="text-gray-500"></strong>Discount Price:</strong>Rp.{{ item.discount_price }}</p> 
+        {% else %}
+            <p class="text-gray-500"><strong>Price: </strong>Rp.{{ item.price }}</p>
+        {% endif %}
+        <p class="text-gray-500"><strong>Seller: </strong>{{ item.created_by.username }}</p>
+         
+        {% if item.description %}
+            <p class="text-gray-700">
+                <strong class="text-gray-500 gap-3">Description:</strong><br>
+                {{ item.description }}
+            </p>
+        {% endif %}  -->
+
+<!-- 
+        {% if request.user == item.created_by %}
+            <div class="mt-6 p-6 bg-white rounded-xl">
+                <p>This is your item!</p>
+
+                <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-gray-800 text-white rounded-xl">Edit</a>
+                <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+            </div>
+        {% else %}  
+            <a href="{% url 'conversation:new' item.id %}" class="inline-block mt-3 px-12 py-3 text-lg text-center font-semibold bg-gray-800 text-white rounded-xl hover:bg-gray-700">
+                <span class="flex items-center">
+                    <span class="mr-2">Add to Cart</span>
+                    <span class="bx bx-cart text-2xl"></span>
+                  </span>
+            </a> -->
+        {% endif %}
+    </div>
+</div>
+
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Related items</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {% for item in related_items %}
+            <div>
+                <a href="{% url 'item:detail' item.id %}">
+                    <div>
+                        <img src="{{ item.image.url }}" class="rounded-t-xl">
+                    </div>
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <p class="mb-0.0 text-gray-500 text-2xl font-semibold">{{ item.created_by.username }}</p>
+                        <h2 class="text-2xl">{{ item.name }}</h2>
+                        <!-- <p class="text-gray-500">Price: {{ item.price }}</p> -->
+                    
+                    <div class="ratting">
+                        <i class='bx bxs-star text-yellow-400'></i>
+                        <i class='bx bxs-star text-yellow-400'></i>
+                        <i class='bx bxs-star text-yellow-400'></i>
+                        <i class='bx bxs-star text-yellow-400'></i>
+                        <i class='bx bx-star text-yellow-400'></i>
+                    </div>
+                    {% if item.discount_price %}
+                    <div class="flex items-center">
+                        <div>
+                            <p class="text-gray-500 flex items-center">
+                                <strong><del>Rp.{{ item.price }}</del></strong>
+                                <span class="text-gray-500 ml-1 font-medium">-{{ item.discount_percentage }}%</span>
+                                <span class="ml-3  mt-1 py-0.5 px-2 inline-block bg-white border-2 border-red-500 text-sm rounded-xl text-red-500 ">
+                                    <span class="bx bxs-discount text-1xl"> <strong> Rp.{{ item.discount_price }}</strong>
+                                   </span>
+                                
+                                </span>
+                            </p>
+                                                              
+                        </div>
+                    </div>
+                    {% else %}
+                        <div class="flex items-center">
+                            <p class="text-gray-500"><strong>Rp.{{ item.price }}</p></strong>
+                            <!-- <p class="price">Rp.{{ item.price }}</p> -->
+                            <!-- <p class="text-gray-500 ml-4">No Discount</p> -->
+                        </div>
+                    {% endif %}
+
+                </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
