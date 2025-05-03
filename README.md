@@ -1,1 +1,1 @@
-# django-ecommerce
+# Fullstack django-ecommerce
